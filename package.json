@@ -1,0 +1,24 @@
+{
+  "name": "tic-tac-toe",
+  "version": "0.0.1",
+  "description": "Tic-Tac-Toe game made in JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "start": "webpack serve --open"
+  },
+  "author": "Gerardo Garcia Lopez",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^6.9.1",
+    "html-webpack-plugin": "^5.6.0",
+    "source-map-loader": "^5.0.0",
+    "style-loader": "^3.3.4",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.3",
+    "webpack": "^5.90.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  }
+}
