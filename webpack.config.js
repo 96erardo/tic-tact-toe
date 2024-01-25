@@ -28,7 +28,7 @@ module.exports = {
   },
   plugins: [
     new HTMLWebpackPlugin({
-      title: 'Chrome Dino Game',
+      title: 'Tic Tac Toe',
       filename: 'index.html'
     }),
     new webpack.EnvironmentPlugin({
