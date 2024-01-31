@@ -29,7 +29,8 @@ module.exports = {
   plugins: [
     new HTMLWebpackPlugin({
       title: 'Tic Tac Toe',
-      filename: 'index.html'
+      filename: 'index.html',
+      template: './src/index.html',
     }),
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development',

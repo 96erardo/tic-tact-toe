@@ -1,3 +1,4 @@
 export type RouteNames = 'title' |
-  'options'
+  'options' |
+  'game'
 ;

@@ -1,0 +1,19 @@
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+body > div.html {
+  position: absolute;
+  width: 480px;
+  height: 480px;
+}
+
+body > canvas.draw {
+  position: absolute;
+  width: 480px;
+  height: 480px;
+}

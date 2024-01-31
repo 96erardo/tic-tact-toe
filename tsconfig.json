@@ -6,6 +6,9 @@
     "noEmitOnError": true,
     "noImplicitAny": true,
     "module": "ESNext",
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react",
   },
   "include": ["./src/**/*"]
 }
