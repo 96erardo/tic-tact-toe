@@ -17,6 +17,21 @@ export class Router <R extends string> {
 
   start () {
     this.running.start()
+    let t = this;
+    let lastTime = 0;
+    let passed = 0;
+
+    requestAnimationFrame(function slideIn (time: DOMHighResTimeStamp) {
+      const delta = lastTime ? (time - lastTime) / 1000 : 0;
+      lastTime = time;
+      passed += delta;
+
+      t.running.move((passed / 3) - 1);
+
+      if (passed < 3) {
+        requestAnimationFrame(slideIn)
+      }
+    })
   }
 
   goTo (screen: R) {

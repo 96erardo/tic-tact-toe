@@ -1,8 +1,9 @@
-import React, { ReactNode, useCallback, useEffect, useLayoutEffect, useRef } from 'react';
+import React, { ReactNode, useCallback, useLayoutEffect, useRef } from 'react';
 import { ScreenConstructor, ScreenInterface } from './Screen';
 import { Router } from '../Router';
 import { RouteNames } from './index';
-
+import { container } from '../constants';
+ 
 export const HTMLScreen: ScreenConstructor<RouteNames> =  class HTMLScreen implements ScreenInterface<RouteNames> {
   router: Router<RouteNames>;
   root: HTMLDivElement;
@@ -10,11 +11,13 @@ export const HTMLScreen: ScreenConstructor<RouteNames> =  class HTMLScreen imple
   constructor (router: Router<RouteNames>) {
     this.router = router;
     this.root = document.createElement('div') as HTMLDivElement;
+    this.root.style.position = 'relative';
+    this.root.style.left = '-480px';
     this.root.className = 'html';
   }
 
   start () {
-    document.body.appendChild(this.root)
+    container.appendChild(this.root)
   }
 
   resume = () => {}
@@ -27,6 +30,12 @@ export const HTMLScreen: ScreenConstructor<RouteNames> =  class HTMLScreen imple
 
   onRemoved = () => {
     this.root.remove();
+  }
+
+  move (position: number) {
+    const left = position * 480;
+
+    this.root.style.left = `${left}px`
   }
 }
 

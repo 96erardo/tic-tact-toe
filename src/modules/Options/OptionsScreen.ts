@@ -45,4 +45,8 @@ export const OptionsScreen: ScreenConstructor<RouteNames> =  class OptionsScreen
     window.clearInterval(this.id)
     document.removeEventListener('keypress', this.onKey)
   }
+
+  move (position: number) {
+    
+  }
 }

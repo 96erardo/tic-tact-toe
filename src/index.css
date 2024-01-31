@@ -3,10 +3,15 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
 }
 
-body > div.html {
+#game-space {
+  width: 480px;
+  height: 480px;
+  overflow: hidden;
+}
+
+body  div.html {
   position: absolute;
   width: 480px;
   height: 480px;

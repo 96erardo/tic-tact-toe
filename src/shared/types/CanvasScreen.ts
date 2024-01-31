@@ -30,7 +30,7 @@ export const CanvasScreen: ScreenConstructor<RouteNames> =  class CanvasScreen i
       this.ctx.fillRect(0, 0, 480, 480)
 
       if (passed < 5) {
-        this.id = requestAnimationFrame(this)
+        requestAnimationFrame(this)
       }
     })
   }
@@ -48,6 +48,9 @@ export const CanvasScreen: ScreenConstructor<RouteNames> =  class CanvasScreen i
   }
 
   onRemoved = () => {
+  }
+
+  move (position: number) {
     
   }
 }

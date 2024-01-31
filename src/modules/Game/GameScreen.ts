@@ -64,4 +64,8 @@ export const GameScreen: ScreenConstructor<RouteNames> =  class GameScreen imple
     window.clearInterval(this.id)
     document.removeEventListener('keypress', this.onKey)
   }
+
+  move (position: number) {
+    
+  }
 }

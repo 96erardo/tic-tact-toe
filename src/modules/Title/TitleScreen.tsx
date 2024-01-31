@@ -16,9 +16,7 @@ export class TitleScreen extends HTMLScreen {
     this.node = createRoot(this.root)
 
     this.node.render(
-      <In>
-        <Title router={this.router} />
-      </In>
+      <Title router={this.router} />
     )
   }
 
