@@ -12,21 +12,23 @@ body {
   position: relative;
 }
 
-div.html, canvas.drawn {
+.screen {
   width: 480px;
   height: 480px;
   position: absolute;
   transition: left 1s;
+  border: 1px solid black;
+  box-sizing: border-box;
 }
 
-div.off, canvas.off {
+.screen.off {
   left: 480px
 }
 
-div.on, canvas.on {
+.screen.on {
   left: 0px
 }
 
-div.hidden, canvas.hidden {
+.screen.hidden {
   left: -480px
 }

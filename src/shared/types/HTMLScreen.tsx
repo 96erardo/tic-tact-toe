@@ -12,37 +12,37 @@ export const HTMLScreen: ScreenConstructor<RouteNames> =  class HTMLScreen imple
   constructor (router: Router<RouteNames>) {
     this.router = router;
     this.screen = document.createElement('div') as HTMLDivElement;
-    this.screen.className = 'html off';
+    this.screen.className = 'screen off';
     
-    this.root = createRoot(this.screen);    
+    this.root = createRoot(this.screen);
   }
   
   start () {
     container.appendChild(this.screen);
 
     requestAnimationFrame(() => {
-      this.screen.className = 'html on';
+      this.screen.className = 'screen on';
     })
   }
 
-  resume = () => {
-    this.screen.className = 'html on';
+  resume () {
+    this.screen.className = 'screen on';
   }
   
   onShown = () => {
 
   }
 
-  onHide = () => {
-    this.screen.className = 'html hidden';
+  onHide () {
+    this.screen.className = 'screen hidden';
   }
 
-  onRemoved = () => {
+  onRemoved () {
     this.screen.addEventListener('transitionend', () => {
       this.root.unmount()
       this.screen.remove();
     }, { once: true })
 
-    this.screen.className = 'html off'
+    this.screen.className = 'screen off'
   }
 }
