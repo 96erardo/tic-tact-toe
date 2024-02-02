@@ -1,56 +1,51 @@
 import { ScreenConstructor, ScreenInterface } from './Screen';
 import { Router } from '../Router';
 import { RouteNames } from './index';
+import { container } from '../constants';
 
 export const CanvasScreen: ScreenConstructor<RouteNames> =  class CanvasScreen implements ScreenInterface<RouteNames> {
   router: Router<RouteNames>;
-  canvas: HTMLCanvasElement;
+  screen: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
-  id: number;
+  running: boolean;
 
   constructor (router: Router<RouteNames>) {
     this.router = router;
-    this.canvas = document.getElementById('draw') as HTMLCanvasElement;
-    this.ctx = this.canvas.getContext('2d');
+    this.screen = document.createElement('canvas') as HTMLCanvasElement;
+    this.ctx = this.screen.getContext('2d');
+    this.running = false;
+    
+    this.screen.className = 'drawn off';
   }
+  
+  start () {
+    container.appendChild(this.screen);
 
-  start = () => {
-    // Entering animation
-    let lastTime = 0;
-    let passed = 0;
-
-    this.id = requestAnimationFrame(function (time: DOMHighResTimeStamp) {
-      const delta = lastTime ? (time - lastTime) / 1000 : 0;
-      lastTime = time;
-      passed += delta;
-
-      const opacity = Math.max(1, (passed * 1) / 5)
-
-      this.ctx.fillStyle = `rgba(0, 0, 0, ${opacity})`
-      this.ctx.fillRect(0, 0, 480, 480)
-
-      if (passed < 5) {
-        requestAnimationFrame(this)
-      }
+    requestAnimationFrame(() => {
+      this.screen.className = 'drawn on';
     })
   }
 
   resume = () => {
-    
+    this.screen.className = 'drawn on';
   }
   
   onShown = () => {
-    
+
   }
 
   onHide = () => {
-  
+    this.screen.className = 'drawn hidden';
   }
 
   onRemoved = () => {
-  }
+    this.running = false;
 
-  move (position: number) {
-    
+    this.screen.addEventListener('transitionend', () => {
+      console.log('remove')
+      this.screen.remove();
+    }, { once: true })
+
+    this.screen.className = 'drawn off'
   }
 }

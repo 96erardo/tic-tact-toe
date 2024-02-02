@@ -9,16 +9,24 @@ body {
   width: 480px;
   height: 480px;
   overflow: hidden;
+  position: relative;
 }
 
-body  div.html {
-  position: absolute;
+div.html, canvas.drawn {
   width: 480px;
   height: 480px;
+  position: absolute;
+  transition: left 1s;
 }
 
-body > canvas.draw {
-  position: absolute;
-  width: 480px;
-  height: 480px;
+div.off, canvas.off {
+  left: 480px
+}
+
+div.on, canvas.on {
+  left: 0px
+}
+
+div.hidden, canvas.hidden {
+  left: -480px
 }
