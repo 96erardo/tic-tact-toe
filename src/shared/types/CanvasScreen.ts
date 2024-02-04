@@ -2,12 +2,13 @@ import { ScreenConstructor, ScreenInterface } from './Screen';
 import { Router } from '../Router';
 import { RouteNames } from './index';
 import { container } from '../constants';
+import { Pointer } from './Pointer';
 
 export const CanvasScreen: ScreenConstructor<RouteNames> =  class CanvasScreen implements ScreenInterface<RouteNames> {
   router: Router<RouteNames>;
   screen: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
-  pointer: { x: number, y: number };
+  pointer: Pointer;
   keys: Set<string>;
   running: boolean;
 
@@ -18,16 +19,20 @@ export const CanvasScreen: ScreenConstructor<RouteNames> =  class CanvasScreen i
     this.screen.setAttribute('height', '480px');
     
     this.ctx = this.screen.getContext('2d');
+    this.pointer = new Pointer();
     this.keys = new Set();
     this.running = false;
     
     this.screen.className = 'screen off';
 
+    this.onClick = this.onClick.bind(this);
     this.onKeyDown = this.onKeyDown.bind(this);
     this.onKeyUp = this.onKeyUp.bind(this);
   }
   
   start () {
+    this.running = true;
+    
     container.appendChild(this.screen);
 
     requestAnimationFrame(() => {
@@ -48,7 +53,7 @@ export const CanvasScreen: ScreenConstructor<RouteNames> =  class CanvasScreen i
   }
 
   onClick (e: PointerEvent) {
-    this.pointer = { x: e.offsetX, y: e.offsetY }
+    this.pointer.set(e.offsetX, e.offsetY);
   }
 
   onKeyDown (e: KeyboardEvent) {

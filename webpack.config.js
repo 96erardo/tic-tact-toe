@@ -14,7 +14,12 @@ module.exports = {
     path: path.resolve(__dirname, 'build')
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js"]
+    extensions: [".ts", ".tsx", ".js"],
+    alias: {
+      "@": path.resolve(__dirname, 'src'),
+      "@/modules": path.resolve(__dirname, 'src/modules/'),
+      "@/shared": path.resolve(__dirname, 'src/shared/'),
+    }
   },
   module: {
     rules: [

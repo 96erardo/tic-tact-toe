@@ -9,6 +9,11 @@
     "moduleResolution": "Node",
     "allowSyntheticDefaultImports": true,
     "jsx": "react",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/modules/*": ["./src/modules/*"],
+      "@/shared/*": ["./src/shared/*"],
+    }
   },
   "include": ["./src/**/*"]
 }
