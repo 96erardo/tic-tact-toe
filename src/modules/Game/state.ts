@@ -8,8 +8,10 @@ export type State = {
   turn: 'x' | 'o';
   winner: null | 'x' | 'o';
   squares: Array<Square>;
-  status: 'playing' | 'finished'
+  status: GameStatus
 }
+
+export type GameStatus = 'playing' | 'painting' | 'finished'
 
 export function newGame (): State {
   const squares: Array<Square> = [];

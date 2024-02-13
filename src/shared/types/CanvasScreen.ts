@@ -11,8 +11,10 @@ export const CanvasScreen: ScreenConstructor<RouteNames> =  class CanvasScreen i
   pointer: Pointer;
   keys: Set<string>;
   running: boolean;
+  lastTime: number;
 
   constructor (router: Router<RouteNames>) {
+    this.lastTime = 0;
     this.router = router;
     this.screen = document.createElement('canvas') as HTMLCanvasElement;
     this.screen.setAttribute('width', '480px');

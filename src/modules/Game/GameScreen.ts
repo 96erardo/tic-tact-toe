@@ -3,7 +3,8 @@ import { RouteNames } from '@/shared/types';
 import { CanvasScreen } from '@/shared/types/CanvasScreen';
 import { Pointer } from '@/shared/types/Pointer';
 import { display } from './display';
-import { State, newGame } from './state';
+import { State, newGame, GameStatus } from './state';
+import { getGameWinner } from './utils';
 
 export class GameScreen extends CanvasScreen {
   router: Router<RouteNames>;
@@ -13,6 +14,7 @@ export class GameScreen extends CanvasScreen {
   pointer: Pointer;
   keys: Set<string>;
   running: boolean;
+  lastTime: number;
 
   constructor (router: Router<RouteNames>) {
     super(router);
@@ -29,14 +31,15 @@ export class GameScreen extends CanvasScreen {
     requestAnimationFrame(this.run)
   }
 
-  run (time: DOMHighResTimeStamp, lastTime: number = 0, passed: number = 0) {
-    const delta = lastTime ? (time - lastTime) / 1000 : 0;
+  run (time: DOMHighResTimeStamp) {
+    const delta = this.lastTime ? (time - this.lastTime) / 1000 : 0;
+    this.lastTime = time;
 
     const nextState = this.update(
       delta, 
       this.state
     );
-
+    
     this.pointer.clean()
 
     display(this.ctx,  nextState);
@@ -49,19 +52,47 @@ export class GameScreen extends CanvasScreen {
   }
 
   update (dt: number, state: State): State {
-    const squares = state.squares.map(s => s.update(dt, state, this.keys, this.pointer));
-    let turn = state.turn;
+    if (state.status === 'finished') {
+      return state;
+    }
 
-    if (this.pointer.clicked()) {
-      console.log('pointer', this.pointer);
+    let turn = state.turn;
+    let winner = null;
+    let status: GameStatus = 'playing';
+    const squares = state.squares.map(s => s.update(dt, state, this.keys, this.pointer));
+    const isPainting = squares.some(square => square.status === 'painting');
+    let isFinished = squares.every(square => square.value !== '');
+
+    if (isPainting) {
+      status = 'painting';
+
+    } else if (isFinished) {
+      status = 'finished';
+    }
+
+    if (state.status === 'painting' && status === 'playing') {
       turn = turn === 'o' ? 'x' : 'o'
+      
+      winner = getGameWinner(squares);
+
+      if (winner !== null) {
+        status = 'finished';
+      }
+    }
+
+    if (status === 'finished') {
+      if (winner === null) {
+        console.log('The game end in a draw')
+      } else {
+        console.log('Game ended in a of', winner, '!!')
+      }
     }
     
     return {
-      ...state,
       turn,
-      winner: null,
+      winner,
       squares,
+      status,
     };
   }
 }    
