@@ -1,8 +1,7 @@
 import React from 'react';
-import { Router } from '../../shared/Router';
-import { RouteNames } from '../../shared/types/index';
+import { ScreenProps } from '@/shared/types';
 
-export const Title: React.FC<{ router: Router<RouteNames> }> = (props) => {
+export const Title: React.FC<ScreenProps> = (props) => {
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'stretch', justifyContent: 'space-around' }}>
       <div>

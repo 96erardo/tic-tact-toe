@@ -3,10 +3,12 @@ import { Router } from '../Router';
 import { RouteNames } from './index';
 import { container } from '../constants';
 import { Pointer } from './Pointer';
+import { GameConfig } from './index';
 
 export const CanvasScreen: ScreenConstructor<RouteNames> =  class CanvasScreen implements ScreenInterface<RouteNames> {
   router: Router<RouteNames>;
   screen: HTMLCanvasElement;
+  config: GameConfig;
   ctx: CanvasRenderingContext2D;
   pointer: Pointer;
   keys: Set<string>;
@@ -16,6 +18,7 @@ export const CanvasScreen: ScreenConstructor<RouteNames> =  class CanvasScreen i
   constructor (router: Router<RouteNames>) {
     this.lastTime = 0;
     this.router = router;
+    this.config = router.config;
     this.screen = document.createElement('canvas') as HTMLCanvasElement;
     this.screen.setAttribute('width', '480px');
     this.screen.setAttribute('height', '480px');
@@ -52,6 +55,10 @@ export const CanvasScreen: ScreenConstructor<RouteNames> =  class CanvasScreen i
     this.screen.addEventListener('click', this.onClick);
     document.addEventListener('keydown', this.onKeyDown);
     document.addEventListener('keyup', this.onKeyUp);
+  }
+
+  refresh (config: GameConfig) {
+    this.config = config;
   }
 
   onClick (e: PointerEvent) {

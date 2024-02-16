@@ -1,5 +1,5 @@
 import { Router } from '@/shared/Router';
-import { RouteNames } from '@/shared/types';
+import { RouteNames, GameConfig } from '@/shared/types';
 import { CanvasScreen } from '@/shared/types/CanvasScreen';
 import { Pointer } from '@/shared/types/Pointer';
 import { display } from './display';
@@ -9,6 +9,7 @@ import { getGameWinner } from './utils';
 export class GameScreen extends CanvasScreen {
   router: Router<RouteNames>;
   screen: HTMLCanvasElement;
+  config: GameConfig;
   ctx: CanvasRenderingContext2D;
   state: State;
   pointer: Pointer;
