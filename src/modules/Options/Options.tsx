@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { ScreenProps } from '@/shared/types';
 
 export const Options: React.FC<ScreenProps> = (props) => {

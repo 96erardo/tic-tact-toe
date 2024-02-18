@@ -60,18 +60,29 @@ export class GameScreen extends CanvasScreen {
     let turn = state.turn;
     let winner = null;
     let status: GameStatus = 'playing';
-    const squares = state.squares.map(s => s.update(dt, state, this.keys, this.pointer));
-    const isPainting = squares.some(square => square.status === 'painting');
-    let isFinished = squares.every(square => square.value !== '');
+    let squares = state.squares.map(s => s.update(dt, state, this.config, this.keys, this.pointer));
 
-    if (isPainting) {
-      status = 'painting';
+    if (
+      this.config.mode === 'single' &&
+      state.status === 'playing' &&
+      state.turn === 'o'
+    ) {
+      const empty = squares.filter(s => s.value === '')
+      const selected = empty[Math.round(Math.random() * (empty.length - 1))]
 
-    } else if (isFinished) {
-      status = 'finished';
+      squares = squares.map(square => {
+        if (square !== selected) {
+          return square
+        }
+
+        return square.clicked()
+      })
     }
 
-    if (state.status === 'painting' && status === 'playing') {
+    status = squares.some(square => square.status === 'painting') ? 'painting' : status;
+    status = (status !== 'painting' && squares.every(square => square.value !== '')) ? 'finished' : status;
+    
+    if (state.status === 'painting' && status !== 'painting') {
       turn = turn === 'o' ? 'x' : 'o'
       
       winner = getGameWinner(squares);
@@ -83,9 +94,9 @@ export class GameScreen extends CanvasScreen {
 
     if (status === 'finished') {
       if (winner === null) {
-        console.log('The game end in a draw')
+        alert('The game end in a draw')
       } else {
-        console.log('Game ended in a of', winner, '!!')
+        alert(`Game ended in a win from ${winner} !!`)
       }
     }
     

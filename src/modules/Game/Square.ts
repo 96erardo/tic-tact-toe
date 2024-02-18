@@ -1,5 +1,6 @@
 import { State } from './state';
 import { Pointer } from '@/shared/types/Pointer';
+import { GameConfig } from '@/shared/types';
 import { 
   COLLISION_SQUARE_SIZE,
 } from './contants';
@@ -26,9 +27,20 @@ export class Square {
     this.passed = passed;
   }
 
-  update (dt: number, state: State, keys: Set<string>, pointer: Pointer): Square {
+  update (
+    dt: number, 
+    state: State, 
+    config: GameConfig, 
+    keys: Set<string>, 
+    pointer: Pointer
+  ): Square {
+
     if (
       pointer.clicked() &&
+      (
+        (config.mode === 'multi') ||
+        (config.mode === 'single' && state.turn === 'x')
+      ) &&
       state.status === 'playing' &&
       this.value === '' &&
       pointRectCollision(
@@ -49,8 +61,8 @@ export class Square {
       let passed = Math.min(0.5, this.passed + dt);
 
       return new Square(
-        this.x, 
-        this.y, 
+        this.x,
+        this.y,
         passed === 0.5 ? 'filled' : 'painting',
         this.value,
         passed
@@ -58,6 +70,15 @@ export class Square {
     }
 
     return this;
+  }
+
+  clicked (): Square {
+    return new Square(
+      this.x,
+      this.y,
+      'painting',
+      'o'
+    );
   }
 
   draw (ctx: CanvasRenderingContext2D) {
