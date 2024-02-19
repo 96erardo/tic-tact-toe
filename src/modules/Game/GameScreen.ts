@@ -4,7 +4,7 @@ import { CanvasScreen } from '@/shared/types/CanvasScreen';
 import { Pointer } from '@/shared/types/Pointer';
 import { display } from './display';
 import { State, newGame, GameStatus } from './state';
-import { getGameWinner } from './utils';
+import { getGameWinner, getSelectedSquare } from './utils';
 
 export class GameScreen extends CanvasScreen {
   router: Router<RouteNames>;
@@ -67,9 +67,8 @@ export class GameScreen extends CanvasScreen {
       state.status === 'playing' &&
       state.turn === 'o'
     ) {
-      const empty = squares.filter(s => s.value === '')
-      const selected = empty[Math.round(Math.random() * (empty.length - 1))]
-
+      const selected = getSelectedSquare(squares);
+      
       squares = squares.map(square => {
         if (square !== selected) {
           return square
